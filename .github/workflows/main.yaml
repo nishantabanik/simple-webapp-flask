@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: latest
+
+      - name: Deploy to server
+        run: |
+          docker stop simple-webapp || true
+          docker rm simple-webapp || true
+          docker run -d --name simple-webapp -p 5000:5000 nishantabanik/simple-webapp:latest
