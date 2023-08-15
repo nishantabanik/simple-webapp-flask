@@ -26,5 +26,5 @@ jobs:
     - name: Push Docker image to registry
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push nisha1234/simple-webapp:latest
+        docker push nisha1234/simple-webapp:latest 
 
