@@ -28,3 +28,13 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push nisha1234/simple-webapp:latest 
 
+    # - name: Push Docker image to ECR
+    #   run: |
+    #     $(aws ecr get-login --no-include-email --region <our-region>)
+    #     docker tag <our-image-name>:latest <our-ecr-uri>/<our-image-name>:latest
+    #     docker push <our-ecr-uri>/<our-image-name>:latest
+
+    # - name: Deploy to ECS
+    #   run: |
+    #     aws ecs update-service --cluster <our-cluster-name> --service <our-service-name> --force-new-deployment
+

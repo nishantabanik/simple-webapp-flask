@@ -1,40 +1,32 @@
-# Simple Web Application
 
-This is a simple web application using [Python Flask](http://flask.pocoo.org/) and [MySQL](https://www.mysql.com/) database. 
-This is used in the demonstration of development of Ansible Playbooks.
-  
-  Below are the steps required to get this working on a base linux system.
-  
-  - Install all required dependencies
-  - Install and Configure Web Server
-  - Start Web Server
+
+# CI/CD for a Simple Web Application
+
+
+## We have forked a webapp: https://github.com/mmumshad/simple-webapp-flask
+  This is a simple web application using [Python Flask](http://flask.pocoo.org/) and [MySQL](https://www.mysql.com/) database. 
    
-## 1. Install all required dependencies
+## Dockerfile (Containerization) & Github Actions (CI/CD Workflow)
   
-  Python and its dependencies
+  I have written a simple Dockerfile for containerizing the webapp project and a basic GitHub Actions workflow configuration main.yml for creating a CI/CD pipeline.
 
-    apt-get install -y python python-setuptools python-dev build-essential python-pip python-mysqldb
-
+  This is a basic setup for our CI/CD pipeline using GitHub Actions. It sets up the environment, installs dependencies, builds a Docker image, and then pushes the image to a Docker registry. We need to replace <our-image-name> with the actual name we want for our Docker image.
    
-## 2. Install and Configure Web Server
+## Documentation on how to run and test containerized app locally and explaining CI workflow
 
-Install Python Flask dependency
+  -- We need to make sure we have Docker installed on our local machine.
+  -- Clone the GitHub repository.
+  -- Navigate to the project directory and build the Docker image: docker build -t my-webapp .
+  -- Run the container: docker run -p 80:80 my-webapp
+  -- Access the web app in your browser at http://localhost:80
 
-    pip install flask
-    pip install flask-mysql
+  This GitHub Actions workflow will build the Docker image, publish it to Docker Hub, and trigger whenever there's a push to the main branch. It ensures that our web app is containerized, tested, and deployed automatically.
 
-- Copy app.py or download it from source repository
-- Configure database credentials and parameters 
+## Additional points to consider
 
-## 3. Start Web Server
+  We'll need to configure the secrets (DOCKER_USERNAME and DOCKER_PASSWORD) in our GitHub repository to allow the workflow to log in and push to your Docker registry. 
 
-Start web server
-
-    FLASK_APP=app.py flask run --host=0.0.0.0
     
-## 4. Test
+## Missing CD part:
 
-Open a browser and go to URL
-
-    http://<IP>:5000                            => Welcome
-    http://<IP>:5000/how%20are%20you            => I am good, how about you?
+  For the missing CD part (for which  don't have any avalable environment), if we are using AWS environment we can use any Compute Services namely ECS, EKS etc (I have commented the CD part inside main.yml) & Container Image Repo as ECR.
